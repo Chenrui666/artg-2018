@@ -14,7 +14,9 @@ function fruit(){
 };
 
 console.log(apple); //will this work? why?
+//will work, because apple is under global scope, which can be loged everywhere.
 //console.log(orange); //will this work? why?
+//will not work, because it is inside the local scope which will not be loged after close.
 
 
 
@@ -35,7 +37,7 @@ const someObj = {
 		console.log(this);
 	}
 }
-someObj.foo();
+someObj.foo();//{prop1: "some value", foo: ƒ}
 
 //2.3: a twist on 2.2
 const bar = someObj.foo;
@@ -64,13 +66,19 @@ d3.select(document.querySelector('body'))
 //2.6 
 //Also beware of "this" context when using selection.on
 d3.select(document.getElementById('dummy-button'))
-	.on('click', function(d){
+	.on('click', function change(){
 		console.group('---2.6---');
 		console.log(this); //what is "this"?
 		console.groupEnd();
 
 		//YOUR CODE HERE
 		//How do you change the html content of the button to "I'm clicked?"
+		if（this.value ='click'）
+			this.value ="I'm clicked";
+		
+		else{
+			this.value ='click'
+		}
 	});
 
 

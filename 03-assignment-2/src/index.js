@@ -4,32 +4,31 @@ import * as d3 from 'd3';
 import './style.css';
 
 import parse from './parse';
-import timeline from './timeline';
+import activityHistogram from './activityHistogram';
 
-console.log('Week 2 assignment 1');
+console.log('Week 3 assignment 2');
 
 //Import and parse data
 d3.csv('./data/hubway_trips_reduced.csv', parse, function(err,trips){
 
-	timeline(trips);
-
 	//Nest trips by origin station
 	const tripsByStation0 = d3.nest()
-		.key(function(d){ return d.station0 })
+		// .key(function(d){ return d.station0 })
+		.key(d => d.station0)
 		.entries(trips);
 
+	console.log(tripsByStation0);
+
 	const stationNodes = d3.select('#timeline-multiple')
-		.selectAll('.station-node')
-		.data(tripsByStation0);
-	const stationNodesEnter = stationNodes.enter()
+		.selectAll('.station-node') //selection of size 0
+		.data(tripsByStation0); //array of size 142
+	const stationNodesEnter = stationNodes.enter() //size 142
 		.append('div')
-		.style('width','200px')
-		.style('height','150px')
+		.attr('class', '.station-node')
+		.style('width','300px')
+		.style('height','180px')
 		.style('float','left');
 	stationNodes.merge(stationNodesEnter)
-		.each(function(d,i){
-			//How to draw an activity timeline for each stationNode?
-			//YOUR CODE HERE:
-		});
+		.each(activityHistogram); //What arguments are we passing to activityHistogram?
 
 });
